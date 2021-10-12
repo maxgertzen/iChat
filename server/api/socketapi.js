@@ -1,4 +1,11 @@
-const io = require('socket.io');
+const options = {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+}
+const io = require('socket.io')(options);
 const socketapi = {
     io
 };
