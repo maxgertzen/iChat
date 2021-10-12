@@ -7,23 +7,24 @@ const formatMessage = require('../utils/messages')
 
 
 const serverMessage = (socket, type, user) => {
-    let message = type === 'welcome' ? '' : 'join' ? '' : 'disconnect' ? '' : null;
+    const botName = 'iChat Bot'
+    let message = type === 'welcome' ? 'Welcome to iChat!' : 'join' ? 'A user has joined the chat' : 'disconnect' ? `${user ? user : 'A user'} has left the chat` : null;
     switch (type) {
         case 'join':
-            socket.broadcast.emit('message', message);
+            socket.broadcast.emit('message', formatMessage(botName, message));
             break;
         case 'welcome':
-            socket.emit('message', 'Welcome to iChat!');
+            socket.emit('message', formatMessage(botName, message));
             break;
         case 'disconnect':
-            socket.emit('message', `${user ? user : 'A user'} has left the chat`)
+            socket.emit('message', formatMessage(botName, message))
         default:
             break;
     }
 }
 
 const userMessage = (socket, msg) => {
-    socket.emit('message', msg)
+    socket.emit('message', formatMessage('USER', msg))
 }
 
 
